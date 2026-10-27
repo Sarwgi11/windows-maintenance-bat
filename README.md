@@ -1,27 +1,29 @@
 # Outil de maintenance système
 
-**Maintenance.exe** — utilitaire de dépannage et d'entretien pour Windows 8, 8.1, 10 et 11 (64 bits).
+Script batch de dépannage et d'entretien pour Windows 8, 8.1, 10 et 11.
 
 Par **Sarwgi11**.
 
 | | |
 |---|---|
+| **Auteur** | Sarwgi11 |
 | **Version** | 8.1 |
 | **Date** | 27/10/2026 |
-| **Fichier** | `Maintenance.bat` (163 Ko) |
-| **Plateforme** | Windows 8, 8.1, 10, 11 — x64 |
+| **Fichier** | `maintenance_v8_1.bat` (≈ 62 Ko) |
+| **Type** | Script batch (.bat) |
+| **Plateforme** | Windows 8, 8.1, 10, 11 |
 | **Langue** | Français |
-| **Installation** | Aucune, exécutable autonome |
-| **Droits requis** | Administrateur (demande UAC au lancement) |
-| **Signature** | Non signé |
+| **Installation** | Aucune, un seul fichier |
+| **Droits requis** | Administrateur (le script demande lui-même l'élévation UAC) |
+| **Dépendances** | Aucune : PowerShell et les outils utilisés sont fournis avec Windows |
 
 ## Description
 
-Maintenance.bat regroupe en un seul programme les opérations courantes de dépannage d'un PC Windows : diagnostic du matériel, du stockage, de la sécurité et du réseau, nettoyage, réparation du système, optimisation et mises à jour.
+`maintenance_v8_1.bat` regroupe en un seul script les opérations courantes de dépannage d'un PC Windows : diagnostic du matériel, du stockage, de la sécurité et du réseau, nettoyage, réparation du système, optimisation et mises à jour.
 
 Il s'utilise depuis un menu numéroté, étape par étape ou en séquence complète. Chaque session produit un **rapport texte horodaté** qui conserve tout ce qui s'est affiché à l'écran.
 
-L'outil sépare nettement ce qui **lit** (diagnostics) de ce qui **modifie** le système (nettoyage, réparation). Toute action risquée ou irréversible demande une confirmation explicite, et les modifications sensibles sont précédées d'une sauvegarde de l'état précédent.
+Le script sépare nettement ce qui **lit** (diagnostics) de ce qui **modifie** le système (nettoyage, réparation). Toute action risquée ou irréversible demande une confirmation explicite, et les modifications sensibles sont précédées d'une sauvegarde de l'état précédent.
 
 ## Les 22 étapes
 
@@ -93,39 +95,37 @@ L'outil sépare nettement ce qui **lit** (diagnostics) de ce qui **modifie** le 
 
 ## Configuration requise
 
-- **Système** : Windows 8, 8.1, 10 ou 11, édition 64 bits
+- **Système** : Windows 8, 8.1, 10 ou 11
 - **Droits** : compte administrateur
-- **Logiciels** : aucun — PowerShell et les outils utilisés sont fournis avec Windows
 - **Windows 8 / 8.1** : WinGet, le cache de livraison optimisée, le rapport de veille et l'historique Defender détaillé ne sont pas disponibles. Le reste fonctionne normalement.
-- **Windows 7 et antérieurs** : non pris en charge.
-- **Windows 32 bits** : utiliser le fichier `.bat` fourni à la place.
+- **Windows 7 et antérieurs** : non pris en charge. Le script s'arrête avec un message explicite.
 
 ## Utilisation
 
-1. Placer `Maintenance..bat` dans un dossier où l'on peut écrire.
-2. Double-clic, puis accepter la demande d'élévation UAC.
-3. Répondre à la proposition de point de restauration.
-4. Choisir une option du menu. Pour un premier essai sans risque, taper `D` : le diagnostic complet ne modifie rien.
+1. Télécharger `maintenance_v8_1.bat` dans un dossier où l'on peut écrire.
+2. Si le fichier vient d'Internet : clic droit, *Propriétés*, puis cocher *Débloquer*.
+3. Double-clic. Le script demande lui-même les droits administrateur ; à défaut, clic droit puis *Exécuter en tant qu'administrateur*.
+4. Répondre à la proposition de point de restauration.
+5. Choisir une option du menu. Pour un premier essai sans risque, taper `D` : le diagnostic complet ne modifie rien.
 
-Les rapports sont écrits dans le dossier `rapports`, à côté de l'exécutable :
+Les rapports sont écrits dans le dossier `rapports`, à côté du script :
 
 ```
 rapport_NOMDUPC_AAAA-MM-JJ_HHMM.txt
 ```
 
-## Fichiers fournis
-
-| Fichier | Rôle |
-|---|---|
-| `maintenance_v8_1.bat` | Le script embarqué, lisible et modifiable |
-| `Maintenance.nfo` | Description au format NFO |
+Si ce dossier n'est pas accessible en écriture, le script utilise `Documents\Maintenance`, puis le dossier temporaire.
 
 ## Notes
 
-- L'exécutable n'est **pas signé** numériquement. Au premier lancement, SmartScreen peut afficher un avertissement : cliquer sur *Informations complémentaires* puis *Exécuter quand même*.
-- Certains antivirus tiers peuvent le signaler : le programme extrait un script dans le dossier temporaire avant de l'exécuter.
+- Le script est en clair : il se lit et se modifie avec n'importe quel éditeur de texte. Conserver les fins de ligne Windows (CRLF), sans quoi les `goto` peuvent échouer.
+- Certains antivirus peuvent signaler un script batch qui lance PowerShell et modifie des paramètres système. Le code étant lisible, il peut être vérifié avant exécution.
 - Selon la machine, une séquence complète dure d'une à plusieurs heures (analyses Defender, MSRT, DISM).
 
 ## Avertissement
 
-Ce logiciel modifie des paramètres système et supprime des fichiers temporaires. Il est fourni tel quel, sans garantie. Faire une sauvegarde avant toute opération de réparation et tester d'abord sur une machine sans enjeu.
+Ce script modifie des paramètres système et supprime des fichiers temporaires. Il est fourni tel quel, sans garantie. Faire une sauvegarde avant toute opération de réparation et tester d'abord sur une machine sans enjeu.
+
+---
+
+© 2026 **Sarwgi11**
