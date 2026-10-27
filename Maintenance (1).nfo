@@ -1,0 +1,150 @@
+===============================================================================
+
+     __  __    _    ___ _   _ _____ _____ _   _    _    _   _  ____ _____
+    |  \/  |  / \  |_ _| \ | |_   _| ____| \ | |  / \  | \ | |/ ___| ____|
+    | |\/| | / _ \  | ||  \| | | | |  _| |  \| | / _ \ |  \| | |   |  _|
+    | |  | |/ ___ \ | || |\  | | | | |___| |\  |/ ___ \| |\  | |___| |___
+    |_|  |_/_/   \_\___|_| \_| |_| |_____|_| \_/_/   \_\_| \_|\____|_____|
+
+            O U T I L   D E   M A I N T E N A N C E   S Y S T E M E
+                 Windows 8  /  8.1  /  10  /  11   -   64 bits
+
+                              par  S a r w g i 1 1
+
+===============================================================================
+
+  [ INFORMATIONS ]
+  ------------------
+  Nom du logiciel : Outil de maintenance systeme
+  Auteur          : Sarwgi11
+  Fichier         : Maintenance.exe
+  Version         : 8.1
+  Date            : 27/10/2026
+  Type            : Utilitaire de depannage en ligne de commande
+  Plateforme      : Windows 8, 8.1, 10, 11 (x64)
+  Taille          : 163 Ko
+  Langue          : Francais
+  Installation    : Aucune - executable autonome
+  Droits requis   : Administrateur (demande UAC au lancement)
+  Signature num.  : Non signe (certificat de code)
+
+  [ DESCRIPTION ]
+  -----------------
+  Maintenance.exe regroupe en un seul programme les operations courantes de
+  depannage et d'entretien d'un PC Windows : diagnostic du materiel, du
+  stockage, de la securite et du reseau, nettoyage, reparation du systeme,
+  optimisation et mises a jour.
+
+  Il s'utilise depuis un menu numerote, etape par etape ou en sequence
+  complete. Chaque session produit un rapport texte horodate qui conserve
+  tout ce qui s'est affiche a l'ecran.
+
+  L'outil separe nettement ce qui se contente de lire (diagnostics) de ce
+  qui modifie le systeme (nettoyage, reparation). Toute action risquee ou
+  irreversible demande une confirmation explicite, et les modifications
+  sensibles sont precedees d'une sauvegarde de l'etat precedent.
+
+  [ LES 22 ETAPES ]
+  -------------------
+  DIAGNOSTIC (lecture seule : rien n'est modifie)
+    1.  Rapport systeme et materiel (CPU, RAM, BIOS, Secure Boot, TPM)
+    2.  Sante des disques : SMART, espace libre, BitLocker
+    3.  Programmes, taches et services au demarrage
+    4.  Audit de securite : Defender, pare-feu, UAC, comptes, ports ouverts
+    5.  Diagnostic reseau : cartes, IP, DNS, latence, connexions
+    6.  Peripheriques USB et Bluetooth, materiel en erreur
+    7.  Performances, fiabilite, erreurs recentes, ecrans bleus (minidumps)
+
+  NETTOYAGE
+    8.  Fichiers temporaires et caches Windows
+    9.  Caches des navigateurs et applications (caches seulement : ni
+        cookies, ni mots de passe, ni historique)
+    10. Nettoyage du magasin de composants WinSxS (DISM)
+    11. Traces recentes du registre, avec sauvegarde de la ruche HKCU
+
+  REPARATION
+    12. DISM puis SFC, dans l'ordre qui fonctionne reellement
+    13. CHKDSK : analyse en ligne, reparation hors ligne sur demande
+    14. Reparation de Windows Update
+    15. Reparation reseau : Winsock et pile TCP/IP
+
+  OPTIMISATION ET MISES A JOUR
+    16. TRIM pour les SSD, defragmentation pour les disques durs
+    17. Plan d'alimentation et sante de la batterie
+    18. Memoire et fichier d'echange (consultation)
+    19. Analyse antivirus Windows Defender
+    20. Analyse anti-malware Microsoft (MSRT)
+    21. Mise a jour des applications via WinGet
+    22. Pilotes graphiques : detection du fabricant et lien officiel
+
+  [ OUTILS DU MENU ]
+  --------------------
+    D   Diagnostic complet automatique (etapes 1 a 7, sans interaction)
+    A   Tout executer (etapes 1 a 22, avec pause entre chaque etape)
+    T   Desactiver la telemetrie (reversible)
+    R   Restaurer les services desactives
+    P   Creer un point de restauration Windows
+    S   Sauvegarder le profil utilisateur vers un disque externe
+    L   Ouvrir le rapport de la session
+    0   Quitter
+
+  [ SECURITE ET REVERSIBILITE ]
+  -------------------------------
+  * Point de restauration propose des l'ecran d'accueil.
+  * Windows Update : les dossiers sont renommes, pas supprimes.
+  * Reseau : la configuration est exportee avant toute reinitialisation,
+    restaurable avec netsh.
+  * Registre : la ruche HKCU est sauvegardee avant le nettoyage.
+  * Telemetrie : un script de restauration est genere avant de toucher
+    aux services. WerSvc, PcaSvc et lfsvc ne sont jamais desactives.
+  * ResetBase (DISM) est irreversible : confirmation obligatoire.
+  * Les journaux d'evenements ne sont jamais effaces.
+  * La sauvegarde du profil vers un disque externe n'est jamais lancee
+    automatiquement : volume et confirmation choisis par l'utilisateur.
+
+  [ CONFIGURATION REQUISE ]
+  ---------------------------
+  Systeme    : Windows 8, 8.1, 10 ou 11, edition 64 bits
+  Droits     : compte administrateur
+  Logiciels  : aucun - PowerShell et les outils utilises sont fournis
+               avec Windows
+  Windows 8  : WinGet, le cache de livraison optimisee, le rapport de
+               veille et l'historique Defender detaille ne sont pas
+               disponibles. Le reste fonctionne normalement.
+  Windows 7 et anterieurs : non pris en charge.
+  Windows 32 bits : utiliser le fichier .bat fourni a la place.
+
+  [ UTILISATION ]
+  -----------------
+  1. Placer Maintenance.exe dans un dossier ou l'on peut ecrire.
+  2. Double-clic, puis accepter la demande d'elevation UAC.
+  3. Repondre a la proposition de point de restauration.
+  4. Choisir une option du menu. Pour un premier essai sans risque,
+     taper D : le diagnostic complet ne modifie rien.
+
+  Les rapports sont ecrits dans le dossier "rapports", a cote de
+  l'executable : rapport_NOMDUPC_AAAA-MM-JJ_HHMM.txt
+
+  [ NOTES ]
+  -----------
+  * L'executable n'est pas signe numeriquement. Au premier lancement,
+    SmartScreen peut afficher un avertissement : cliquer sur
+    "Informations complementaires" puis "Executer quand meme".
+  * Certains antivirus tiers peuvent le signaler : le programme extrait
+    un script dans le dossier temporaire avant de l'executer.
+  * Le script embarque est identique au fichier maintenance_v8_1.bat
+    fourni, que l'on peut lire et modifier librement.
+  * Selon la machine, une sequence complete dure d'une a plusieurs heures
+    (analyses Defender, MSRT, DISM).
+
+  [ AVERTISSEMENT ]
+  -------------------
+  Ce logiciel modifie des parametres systeme et supprime des fichiers
+  temporaires. Il est fourni tel quel, sans garantie. Faire une
+  sauvegarde avant toute operation de reparation et tester d'abord sur
+  une machine sans enjeu.
+
+===============================================================================
+                Merci d'utiliser l'Outil de maintenance systeme
+                          (c) 2026 - Sarwgi11
+===============================================================================
